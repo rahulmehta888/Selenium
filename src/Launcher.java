@@ -1,7 +1,10 @@
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 
+import javax.xml.bind.Element;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Launcher {
@@ -24,7 +27,21 @@ public static WebDriver driver=null;
             System.out.println(String.format("Actually the title is %s", title));
         }
         Actions action = new Actions(driver);
-        action.moveToElement(element).click().perform();
+        //WebElement element1=
+                driver.findElement(By.cssSelector("#nav-hamburger-menu")).click();
+        //WebElement element1=
+
+                driver.findElement(By.cssSelector("#hmenu-content > ul.hmenu.hmenu-visible > li:nth-child(2) > a")).click();
+                //driver.findElement(By.cssSelector("#hmenu-content > ul.hmenu.hmenu-visible.hmenu-translateX > li:nth-child(3) > a")).click();
+               // driver.findElement(By.cssSelector("#hmenu-content > ul.hmenu.hmenu-visible.hmenu-translateX > li:nth-child(4) > a")).click();
+            //       driver.findElement(By.linkText("Echo Dot"));
+                  WebElement element1= driver.findElement(By.xpath("//*[@id=\"hmenu-content\"]/ul[1]/li[3]/a"));
+                  element1.sendKeys(Keys.CONTROL +"t");
+
+
+
+
+        //action.moveToElement(element).click().perform();
 
     }
 }
