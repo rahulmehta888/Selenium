@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="selenium" level="project" />
+    <orderEntry type="library" name="poi-1.1.1" level="project" />
   </component>
 </module>
