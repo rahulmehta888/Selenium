@@ -3,13 +3,10 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class AmazonExecutor {
    private static File logfile=new File(String.format(".\\data\\amazon\\temp\\Log%s.txt",String.valueOf(System.currentTimeMillis())));
@@ -30,24 +27,22 @@ public class AmazonExecutor {
         driver.manage().window().maximize();
 
         AmazonFileReader amazonFileReader=new AmazonFileReader();
-            /**Fetching xlsx file reader
+            //Fetching xlsx file reader
 
-             */
-        XSSFWorkbook instructions = amazonFileReader.getinstructions();
+            XSSFWorkbook instructions = amazonFileReader.getinstructions();
 
         XSSFSheet currentsheet = instructions.getSheet("Sheet1");
         
-        int TotalsRows = currentsheet.getLastRowNum() - currentsheet.getFirstRowNum();
+                    /*Fetching Values one row at a time
 
-            /**Fetching Values one row at a time
-             *
              */
 
             for(int i=currentsheet.getFirstRowNum()+1;i<currentsheet.getLastRowNum()+1;i++)
             {
 
-                /**Reading each row. Performing actions on value specified inAction column
-                 *
+                /*Reading each row. Performing actions on value specified in Action column.
+                  Since Null is a valid entry, handling it separately.
+
                  */
 
                 XSSFRow row = currentsheet.getRow(i);
@@ -55,7 +50,7 @@ public class AmazonExecutor {
                 log.println(String.format("Action Number %d", i));
                 log.println(System.lineSeparator());
                 try {
-                    String Action1 = row.getCell(2).getStringCellValue().toLowerCase();
+
                     if (row.getCell(2).getStringCellValue().toLowerCase().matches("click")) {
                         driver.findElement(By.cssSelector(row.getCell(1).getStringCellValue())).click();
                         log.println(String.format("Action: %s Complete on %s", row.getCell(2).getStringCellValue(), row.getCell(0).getStringCellValue()));
@@ -98,9 +93,8 @@ public class AmazonExecutor {
                         //System.out.println("Yes");
                     }
                 }
-                /** Since Null is a valid entry, handling it separately.
 
-                 */
+
               catch (NullPointerException e)
                 {
                    // e.getCause().toString();
@@ -109,19 +103,16 @@ public class AmazonExecutor {
                     log.println(System.lineSeparator());
                     //driver.navigate().to("https://www.amazon.in");
                 }
-
-
             }
-
     }
 
     private static void CloseExtraTab(WebDriver driver) {
-        ArrayList tabs = new ArrayList(driver.getWindowHandles());
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         if (tabs.size()>1) {
 
-            driver.switchTo().window((String) tabs.get(0)).close();
-            tabs = new ArrayList(driver.getWindowHandles());
-            driver.switchTo().window((String) tabs.get(0));
+            driver.switchTo().window(tabs.get(0)).close();
+            tabs = new ArrayList<>(driver.getWindowHandles());
+            driver.switchTo().window(tabs.get(0));
         }
     }
 }
