@@ -1,4 +1,5 @@
 package Amazon;
+import com.sun.istack.NotNull;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -12,11 +13,11 @@ public class AmazonExecutor {
    private static File logfile=new File(String.format(".\\data\\amazon\\temp\\Log%s.txt",String.valueOf(System.currentTimeMillis())));
 
    //logger instantiation
-   private static  PrintStream log;
+ @NotNull  private static  PrintStream log;
 
       static {
         try {
-            log = new PrintStream(logfile);
+         log = new PrintStream(logfile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -49,7 +50,7 @@ public class AmazonExecutor {
                 System.out.println(i);
                 log.println(String.format("Action Number %d", i));
                 log.println(System.lineSeparator());
-                try {
+                if(row.getCell(2).getStringCellValue()!=null) {
 
                     if (row.getCell(2).getStringCellValue().toLowerCase().matches("click")) {
                         driver.findElement(By.cssSelector(row.getCell(1).getStringCellValue())).click();
@@ -94,8 +95,10 @@ public class AmazonExecutor {
                     }
                 }
 
+                // do something here
 
-              catch (NullPointerException e)
+
+              else //(NullPointerException e)
                 {
                    // e.getCause().toString();
                    //System.err.println("NullPointerException: " +  e.getMessage());
