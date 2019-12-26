@@ -1,12 +1,7 @@
 import Amazon.AmazonExecutor;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-
-import javax.xml.bind.Element;
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Launcher {
