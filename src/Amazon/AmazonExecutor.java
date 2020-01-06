@@ -1,11 +1,13 @@
 package Amazon;
 import com.sun.istack.NotNull;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -22,7 +24,6 @@ public class AmazonExecutor {
             e.printStackTrace();
         }
       }
-
         public static void Perform(WebDriver driver) throws IOException {
         driver.navigate().to("https://www.amazon.in");
         driver.manage().window().maximize();
@@ -30,22 +31,19 @@ public class AmazonExecutor {
         AmazonFileReader amazonFileReader=new AmazonFileReader();
             //Fetching xlsx file reader
 
-            XSSFWorkbook instructions = amazonFileReader.getinstructions();
+          XSSFWorkbook instructions = amazonFileReader.getinstructions();
 
         XSSFSheet currentsheet = instructions.getSheet("Sheet1");
         
                     /*Fetching Values one row at a time
 
              */
-
             for(int i=currentsheet.getFirstRowNum()+1;i<currentsheet.getLastRowNum()+1;i++)
             {
-
                 /*Reading each row. Performing actions on value specified in Action column.
                   Since Null is a valid entry, handling it separately.
 
                  */
-
                 XSSFRow row = currentsheet.getRow(i);
                 System.out.println(i);
                 log.println(String.format("Action Number %d", i));
@@ -94,10 +92,7 @@ public class AmazonExecutor {
                         //System.out.println("Yes");
                     }
                 }
-
                 // do something here
-
-
               else //(NullPointerException e)
                 {
                    // e.getCause().toString();
@@ -105,14 +100,18 @@ public class AmazonExecutor {
                     log.println("------------------Empty Field moving on to next one---------------------------");
                     log.println(System.lineSeparator());
                     //driver.navigate().to("https://www.amazon.in");
+                    TakesScreenshot scr=((TakesScreenshot)driver);
+                    File file=scr.getScreenshotAs(OutputType.FILE);
+                    FileUtils.copyFile(file, new File("C:\\CaptureScreenshot\\google.jpg"));
+
                 }
             }
     }
 
-    private static void CloseExtraTab(WebDriver driver) {
+    private static void CloseExtraTab(WebDriver driver)
+    {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         if (tabs.size()>1) {
-
             driver.switchTo().window(tabs.get(0)).close();
             tabs = new ArrayList<>(driver.getWindowHandles());
             driver.switchTo().window(tabs.get(0));

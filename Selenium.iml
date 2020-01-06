@@ -9,5 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="selenium" level="project" />
     <orderEntry type="library" name="poi-1.1.1" level="project" />
+    <orderEntry type="library" name="selenium (2)" level="project" />
+    <orderEntry type="library" name="commons-io-2" level="project" />
   </component>
 </module>
